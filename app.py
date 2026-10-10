@@ -19,7 +19,7 @@ st.markdown("""
         border: none;
     }
     
-    /* Completely hide menus, headers, and toolbars */
+        /* Completely hide menus, headers, and toolbars */
     #MainMenu {visibility: hidden !important; display: none !important;}
     header {visibility: hidden !important; display: none !important;}
     [data-testid="stHeader"] {display: none !important;}
@@ -38,12 +38,17 @@ st.markdown("""
         visibility: hidden !important;
     }
     
-    /* Target any remaining viewer/author containers */
-    div[class*="viewer"] {
+    /* NUCLEAR OPTION: Destroy any container hosting creator attribution names or badges at the root level */
+    div[class*="viewer"], div[class*="Viewer"], div[class*="attribution"] {
         display: none !important;
+        visibility: hidden !important;
     }
-
-
+    
+    /* Hide the entire bottom-right floating utilities grid block completely */
+    div[class*="stStatusWidget"] {
+        display: none !important;
+        visibility: hidden !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
