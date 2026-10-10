@@ -19,17 +19,19 @@ st.markdown("""
         border: none;
     }
     
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
+    /* Completely hide menus, headers, and toolbars */
+    #MainMenu {visibility: hidden !important; display: none !important;}
+    header {visibility: hidden !important; display: none !important;}
+    [data-testid="stHeader"] {display: none !important;}
+    .stAppDeployButton {display: none !important;}
     
-    /* Target and completely remove the upper right toolbar (Share, Star, running status) */
-    [data-testid="stHeader"] {
-        display: none !important;
-    }
-    .stAppDeployButton {
-        display: none !important;
-    }
+    /* Target and destroy the footer, viewer badge, and any floating profile bars at the bottom */
+    footer {visibility: hidden !important; display: none !important;}
+    .viewerBadge {display: none !important;}
+    [data-testid="stViewerBadge"] {display: none !important;}
+    [data-testid="stDecoration"] {display: none !important;}
+    div[class^="st-emotion-cache"] > footer {display: none !important;}
+
     </style>
 """, unsafe_allow_html=True)
 
