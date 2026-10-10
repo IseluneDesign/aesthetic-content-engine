@@ -6,14 +6,29 @@ st.set_page_config(page_title="Aesthetic Content Engine", page_icon="✨", layou
 
 st.markdown("""
     <style>
+    /* Change background and font colors */
     .main {background-color: #FAF9F6;}
     h1 {color: #2C2C2C; font-family: 'Helvetica Neue', sans-serif;}
+    
+    /* Style the custom action button */
     div.stButton > button:first-child {
         background-color: #2C2C2C;
         color: white;
         border-radius: 8px;
         padding: 10px 24px;
         border: none;
+    }
+    
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    /* Target and completely remove the upper right toolbar (Share, Star, running status) */
+    [data-testid="stHeader"] {
+        display: none !important;
+    }
+    .stAppDeployButton {
+        display: none !important;
     }
     </style>
 """, unsafe_allow_html=True)
