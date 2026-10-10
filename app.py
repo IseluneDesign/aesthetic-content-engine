@@ -31,6 +31,18 @@ st.markdown("""
     [data-testid="stViewerBadge"] {display: none !important;}
     [data-testid="stDecoration"] {display: none !important;}
     div[class^="st-emotion-cache"] > footer {display: none !important;}
+    
+    /* Force-hide the parent toolbar block that hosts the profile name badge */
+    [data-testid="stToolbar"] {
+        display: none !important;
+        visibility: hidden !important;
+    }
+    
+    /* Target any remaining viewer/author containers */
+    div[class*="viewer"] {
+        display: none !important;
+    }
+
 
     </style>
 """, unsafe_allow_html=True)
