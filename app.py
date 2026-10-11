@@ -1,104 +1,83 @@
 import streamlit as st
 from openai import OpenAI
 
-# 1. Page Configuration Setup
+# 1. Stable Page Configuration Setup
 st.set_page_config(
     page_title="Aesthetic Content Engine | Iselune Design",
     page_icon="✦",
     layout="centered"
 )
 
-# 2. Dynamic Logo Path Definition from GitHub
-github_logo_url = "https://githubusercontent.com"
-
-# 3. Comprehensive Boho-Celestial Styling Suite (Overriding default Streamlit)
+# 2. Seamless Global Interface Styling (No "box-in-a-box" layouts)
 st.markdown(
-    f"""
+    """
     <style>
-    /* Global Base Styling Elements */
-    .stApp {{
+    /* Force the main background and text colors to be perfectly uniform */
+    .stApp {
         background-color: #faf7f2 !important; /* Soft warm linen background */
-        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif !important;
         color: #51463e !important;
-    }}
+    }
     
-    /* Remove default Streamlit header and footer spacing blocks */
-    header {{visibility: hidden !important; display: none !important;}}
-    footer {{visibility: hidden !important; display: none !important;}}
-    [data-testid="stHeader"] {{display: none !important;}}
-    .stAppDeployButton {{display: none !important;}}
-    #MainMenu {{visibility: hidden !important; display: none !important;}}
-    .stAppDeployButton {{display: none !important;}}
-    [data-testid="stViewerBadge"] {{display: none !important;}}
-    [data-testid="stDecoration"] {{display: none !important;}}
-    [data-testid="stToolbar"] {{display: none !important; visibility: hidden !important;}}
+    /* Clean up default application spacing and headers */
+    header {visibility: hidden !important; display: none !important;}
+    footer {visibility: hidden !important; display: none !important;}
+    [data-testid="stHeader"] {display: none !important;}
+    .stAppDeployButton {display: none !important;}
+    #MainMenu {visibility: hidden !important; display: none !important;}
+    [data-testid="stViewerBadge"] {display: none !important;}
+    [data-testid="stDecoration"] {display: none !important;}
+    [data-testid="stToolbar"] {display: none !important; visibility: hidden !important;}
     
-    .block-container {{
-        padding-top: 2.5rem !important;
-        padding-bottom: 2rem !important;
-        max-width: 540px !important; /* Centered narrow elegant look */
-    }}
+    /* Center and elegantly constrain the maximum container width */
+    .block-container {
+        max-width: 550px !important;
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
 
-    /* Card Wrapper UI Layout styling */
-    div[data-testid="stVerticalBlock"] > div:has(.boho-card) {{
-        background-color: #ffffff;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 12px 40px rgba(163, 145, 129, 0.12);
-        border: 1px solid rgba(214, 201, 188, 0.5);
-    }}
-
-    /* Typography headers styling */
-    h1 {{
-        font-family: 'Georgia', serif !important; /* Luxurious Serif font matching Iselune */
+    /* Style titles and captions to align with luxury branding */
+    h1 {
+        font-family: 'Georgia', serif !important;
         font-weight: 400 !important;
-        font-size: 28px !important;
         color: #40352e !important;
-        text-align: center !important;
-        margin-top: 10px !important;
-        margin-bottom: 8px !important;
+        font-size: 30px !important;
         letter-spacing: 0.5px !important;
-    }}
+        margin-bottom: 8px !important;
+    }
+    
+    .subtitle-text {
+        font-size: 14px !important;
+        color: #8c7b70 !important;
+        line-height: 1.6 !important;
+        margin-bottom: 25px !important;
+    }
 
-    .subtitle-text {{
-        font-size: 14px;
-        color: #8c7b70;
-        text-align: center;
-        line-height: 1.5;
-        margin-bottom: 30px;
-    }}
-
-    /* Labels transformation */
-    div[data-testid="stWidgetLabel"] p {{
+    /* Format input form field label markers elegantly */
+    div[data-testid="stWidgetLabel"] p {
         font-size: 11px !important;
         font-weight: 600 !important;
         text-transform: uppercase !important;
         letter-spacing: 1px !important;
         color: #8c7b70 !important;
-    }}
+    }
 
-    /* Dropdowns and Input Customizations */
-    div[data-baseweb="select"], div[data-baseweb="textarea"] {{
-        background-color: #faf7f2 !important;
-        border-radius: 10px !important;
-    }}
-    
-    div[data-baseweb="select"] > div, textarea {{
-        background-color: #faf7f2 !important;
+    /* Beautiful, cohesive styling for inputs and selects */
+    div[data-baseweb="select"] > div, textarea {
+        background-color: #ffffff !important;
         border: 1px solid #e6ded6 !important;
         border-radius: 10px !important;
         color: #51463e !important;
-    }}
+    }
 
-    textarea:focus, div[data-baseweb="select"] > div:focus-within {{
+    textarea:focus, div[data-baseweb="select"] > div:focus-within {
         border-color: #bfa895 !important;
         box-shadow: 0 0 0 3px rgba(191, 168, 149, 0.15) !important;
-    }}
+    }
 
-    /* Earthy Premium Action Button styling */
-    div.stButton > button {{
+    /* Earthy Premium Action Button Customization */
+    div.stButton > button {
         width: 100% !important;
-        background-color: #51463e !important; /* Luxurious espresso earthy shade */
+        background-color: #51463e !important; /* Elegant deep espresso brown */
         color: #faf7f2 !important;
         border: none !important;
         border-radius: 10px !important;
@@ -107,43 +86,36 @@ st.markdown(
         font-weight: 600 !important;
         letter-spacing: 1px !important;
         text-transform: uppercase !important;
-        cursor: pointer !important;
         transition: all 0.2s ease !important;
         margin-top: 10px !important;
-        box-shadow: 0 4px 15px rgba(81, 70, 62, 0.2) !important;
-    }}
+        box-shadow: 0 4px 15px rgba(81, 70, 62, 0.15) !important;
+    }
 
-    div.stButton > button:hover {{
+    div.stButton > button:hover {
         background-color: #40352e !important;
-        transform: translateY(-1px) !important;
-        box-shadow: 0 6px 20px rgba(81, 70, 62, 0.3) !important;
-    }}
-    
-    div.stButton > button:active {{
-        transform: translateY(0) !important;
-    }}
+        box-shadow: 0 6px 20px rgba(81, 70, 62, 0.25) !important;
+    }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# 4. Brand Header Matrix
-# Centers your uploaded transparent vector logo at the top
+# 3. Dynamic Logo Path Definition from GitHub
+github_logo_url = "https://githubusercontent.com"
+
+# 4. Content Presentation Layout Block
 st.markdown(
     f"""
     <div style="text-align: center;">
-        <img src="{github_logo_url}" style="max-width: 150px; height: auto; margin-bottom: 12px;" alt="Iselune Design">
+        <img src="{github_logo_url}" style="max-width: 160px; height: auto; margin-bottom: 16px;" alt="Iselune Design">
+        <h1>Aesthetic Content Engine</h1>
+        <p class="subtitle-text">Generate high-converting, luxury social media captions for your templates in seconds.</p>
     </div>
     """, 
     unsafe_allow_html=True
 )
-st.title("Aesthetic Content Engine")
-st.markdown('<p class="subtitle-text">Generate high-converting, luxury social media captions for your templates in seconds.</p>', unsafe_allow_html=True)
 
-# Fake invisible anchor to safely bind card wrap CSS styling rules
-st.markdown('<div class="boho-card"></div>', unsafe_allow_html=True)
-
-# 5. Frontend Form Elements
+# 5. Core Operational Form Layout (Ensuring reliable alignment)
 niche = st.selectbox(
     "What template are you using today?",
     ["Med Spa & Esthetician", "Hair Stylist & Nail Tech", "Wedding Invitations & Events", "Seasonal & Holidays"]
@@ -159,12 +131,11 @@ tone = st.selectbox(
     ["Luxurious & Elegant", "Friendly & Welcoming", "Educational & Expert", "Witty & Trendy"]
 )
 
-# 6. AI Generation Trigger Pipeline
+# 6. AI Generation Processing Pipeline
 if st.button("Generate Caption"):
     if not topic.strip():
         st.warning("Please type a topic or announcement first!")
     else:
-        # Access secure hidden credentials
         if "OPENAI_API_KEY" in st.secrets:
             api_key = st.secrets["OPENAI_API_KEY"]
         else:
@@ -198,7 +169,7 @@ if st.button("Generate Caption"):
                     ]
                 )
                 
-                # Output result neatly below
+                # Render final results cleanly on page reload
                 st.markdown("---")
                 st.success("Your Content is Ready!")
                 st.write(response.choices[0].message.content)
