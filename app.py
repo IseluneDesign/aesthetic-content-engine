@@ -6,55 +6,68 @@ st.set_page_config(page_title="Aesthetic Content Engine", page_icon="🌿", layo
 
 st.markdown("""
     <style>
-    /* Boho Base Palette and Backgrounds */
-    .main {background-color: #FAF6F0;}
+    /* FORCE GLOBAL LIGHT/BOHO BACKGROUND OVERRIDING DARK MODE */
+    html, body, [data-testid="stAppViewContainer"], .main {
+        background-color: #FAF6F0 !important;
+        color: #4A3E3D !important;
+    }
     
-    /* Elegant Serif Header styling mimicking custom boho fonts */
+    /* Elegant Serif Header styling */
     h1 {
-        color: #4A3E3D; 
+        color: #4A3E3D !important; 
         font-family: 'Georgia', serif;
         font-weight: 300;
         text-align: center;
+        margin-top: 10px;
     }
     .sub-text {
-        color: #7D6B63;
+        color: #7D6B63 !important;
         font-family: 'Helvetica Neue', sans-serif;
         text-align: center;
         margin-bottom: 25px;
     }
     
-    /* Warm Earthy Inputs */
-    div[data-testid="stSelectbox"] label, div[data-testid="stTextArea"] label {
+    /* FORCE LABEL TEXT VISIBILITY (Preventing dark-on-dark text) */
+    div[data-testid="stSelectbox"] label p, div[data-testid="stTextArea"] label p {
         color: #4A3E3D !important;
         font-family: 'Georgia', serif;
-        font-weight: bold;
+        font-weight: bold !important;
+        font-size: 16px !important;
     }
     
-    div[data-testid="stSelectbox"] div[data-baseweb="select"], div[data-testid="stTextArea"] textarea {
+    /* FORCE CREAM/WHITE BACKGROUND FOR INPUTFIELES */
+    div[data-testid="stSelectbox"] div[data-baseweb="select"], 
+    div[data-testid="stTextArea"] textarea,
+    div[role="listbox"] {
         background-color: #FFFFFF !important;
         border: 1px solid #E6DFD3 !important;
         border-radius: 12px !important;
         color: #4A3E3D !important;
     }
     
+    /* Ensure the text typed inside the inputs is dark brown instead of white */
+    div[data-testid="stSelectbox"] *, div[data-testid="stTextArea"] textarea {
+        color: #4A3E3D !important;
+    }
+    
     /* Terracotta Boho Action Button */
     div.stButton > button:first-child {
-        background-color: #D4A373;
-        color: white;
-        border-radius: 20px;
-        padding: 12px 30px;
-        border: none;
-        font-family: 'Georgia', serif;
-        font-size: 16px;
-        width: 100%;
-        box-shadow: 0px 4px 10px rgba(212, 163, 115, 0.2);
-        transition: all 0.3s ease;
+        background-color: #D4A373 !important;
+        color: white !important;
+        border-radius: 20px !important;
+        padding: 12px 30px !important;
+        border: none !important;
+        font-family: 'Georgia', serif !important;
+        font-size: 16px !important;
+        width: 100% !important;
+        box-shadow: 0px 4px 10px rgba(212, 163, 115, 0.2) !important;
+        transition: all 0.3s ease !important;
     }
     
     div.stButton > button:first-child:hover {
-        background-color: #BC6C25;
-        color: white;
-        box-shadow: 0px 6px 15px rgba(188, 108, 37, 0.3);
+        background-color: #BC6C25 !important;
+        color: white !important;
+        box-shadow: 0px 6px 15px rgba(188, 108, 37, 0.3) !important;
     }
     
     /* Completely hide menus, headers, and toolbars */
@@ -90,13 +103,18 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 2. Header and Logo Layout
-# Using the raw path to pull your logo directly from your repository asset
+# 2. Header and Logo Layout (Fixed HTML Embedding method)
 logo_url = "https://githubusercontent.com"
 
-col1, col2, col3 = st.columns([1, 2, 1])
-with col2:
-    st.image(logo_url, use_container_width=True)
+# Renders the logo centered reliably using clean HTML markup
+st.markdown(
+    f"""
+    <div style="text-align: center;">
+        <img src="{logo_url}" width="120" style="margin-bottom: 10px;">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 st.markdown("<h1>Aesthetic Content Engine</h1>", unsafe_allow_html=True)
 st.markdown("<p class='sub-text'>Generate high-converting, luxury social media captions for your templates in seconds.</p>", unsafe_allow_html=True)
