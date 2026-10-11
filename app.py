@@ -1,25 +1,34 @@
+import streamlit as st
+
+# Set up the tab title and browser icon properties
+st.set_page_config(
+    page_title="Aesthetic Content Engine | Iselune Design",
+    page_icon="✦",
+    layout="centered"
+)
+
+# Complete Boho-Celestial HTML/CSS Interface Matrix wrapped cleanly for Streamlit execution
+boho_interface_code = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aesthetic Content Engine | Iselune Design</title>
     <style>
-        /* Immersive Boho & Celestial Themed Styles */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            background-color: #faf7f2; /* Soft warm linen/cream background */
+            background-color: #faf7f2; /* Soft warm linen background */
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            color: #51463e; /* Gentle, earthy charcoal-taupe text */
+            color: #51463e; /* Earthy charcoal-taupe text */
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
 
-        /* Ambient celestial lighting effect in background corner */
+        /* Ambient background glow */
         body::before {
             content: '';
             position: absolute;
@@ -32,58 +41,56 @@
             pointer-events: none;
         }
 
-        /* Tool Dashboard Container */
         .engine-card {
-            background-color: #ffffff; /* Clean white canvas card */
+            background-color: #ffffff; /* Clean white dashboard card */
             width: 100%;
-            max-width: 540px;
-            padding: 45px;
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 12px 40px rgba(163, 145, 129, 0.12); /* Soft, warm shadow drop */
-            border: 1px solid rgba(214, 201, 188, 0.5); /* Delicate taupe border alignment */
+            box-shadow: 0 12px 40px rgba(163, 145, 129, 0.12);
+            border: 1px solid rgba(214, 201, 188, 0.5);
             z-index: 2;
             box-sizing: border-box;
             text-align: center;
         }
 
-        /* Header Logo Section Styling */
         .brand-header {
-            margin-bottom: 35px;
+            margin-bottom: 30px;
         }
 
-        /* Responsive container designed explicitly for your vector SVG logo */
+        /* References your uploaded transparent logo hosted on GitHub */
         .brand-logo {
             display: block;
-            max-width: 160px;      /* Sharp, elegant sizing for your line art */
-            height: auto;          /* Scalable vector math preserves layout proportions */
-            margin: 0 auto 16px;   /* Centers horizontally and offsets typography below */
+            max-width: 150px;
+            height: auto;
+            margin: 0 auto 16px;
         }
 
         h1 {
-            font-family: 'Georgia', serif; /* Luxurious Serif font matching Iselune typography style */
+            font-family: 'Georgia', serif; /* Luxurious typography matching your logo */
             font-weight: 400;
-            font-size: 28px;
+            font-size: 26px;
             color: #40352e;
             margin: 0 0 8px 0;
             letter-spacing: 0.5px;
         }
 
         .subtitle {
-            font-size: 14px;
+            font-size: 13px;
             color: #8c7b70;
             margin: 0 0 25px 0;
             line-height: 1.5;
         }
 
-        /* Form Controls Layout */
         .form-group {
             text-align: left;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -91,14 +98,13 @@
             margin-bottom: 8px;
         }
 
-        /* Form Inputs (Dropdowns and Text Areas) */
         select, textarea {
             width: 100%;
             box-sizing: border-box;
             background-color: #faf7f2;
             border: 1px solid #e6ded6;
             border-radius: 10px;
-            padding: 14px 16px;
+            padding: 12px 14px;
             font-size: 14px;
             color: #51463e;
             outline: none;
@@ -109,16 +115,15 @@
         select {
             cursor: pointer;
             appearance: none;
-            /* Elegant custom dropdown arrow marker */
             background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://w3.org' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238c7b70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 16px center;
+            background-position: right 14px center;
             padding-right: 40px;
         }
 
         textarea {
             resize: none;
-            height: 110px;
+            height: 90px;
             line-height: 1.5;
         }
 
@@ -127,54 +132,45 @@
             opacity: 0.6;
         }
 
-        /* Input interactive focus state indicators */
         select:focus, textarea:focus {
-            border-color: #bfa895; /* Accent taupe tone focus */
+            border-color: #bfa895;
             background-color: #ffffff;
             box-shadow: 0 0 0 3px rgba(191, 168, 149, 0.15);
         }
 
-        /* Earthy Premium Action Button */
         .submit-btn {
             width: 100%;
-            background-color: #51463e; /* Luxurious dark espresso earthy shade */
+            background-color: #51463e; /* Luxurious dark espresso shade */
             color: #faf7f2;
             border: none;
             border-radius: 10px;
-            padding: 16px;
-            font-size: 14px;
+            padding: 14px;
+            font-size: 13px;
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.2s ease;
-            margin-top: 10px;
+            margin-top: 5px;
             box-shadow: 0 4px 15px rgba(81, 70, 62, 0.2);
         }
 
         .submit-btn:hover {
             background-color: #40352e;
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(81, 70, 62, 0.3);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
         }
     </style>
 </head>
 <body>
 
     <div class="engine-card">
-        <!-- Brand Header Section -->
         <div class="brand-header">
-            <!-- Programmed directly to call your transparent SVG file -->
+            <!-- Pulls the logo file directly from your GitHub master directory -->
             <img class="brand-logo" src="logo.svg" alt="Iselune Design Logo">
             <h1>Aesthetic Content Engine</h1>
             <div class="subtitle">Generate high-converting, luxury social media captions for your templates in seconds.</div>
         </div>
 
-        <!-- Input Interface Matrix -->
         <div class="form-group">
             <label for="template">What template are you using today?</label>
             <select id="template">
@@ -205,3 +201,7 @@
 
 </body>
 </html>
+"""
+
+# Render the custom designed app directly into the Streamlit page view
+st.components.v1.html(boho_interface_code, height=680, scrolling=False)
