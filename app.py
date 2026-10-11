@@ -1,161 +1,61 @@
 import streamlit as st
 from openai import OpenAI
 
-# 1. Page Configuration Setup
-st.set_page_config(
-    page_title="Aesthetic Content Engine | Iselune Design",
-    page_icon="✦",
-    layout="centered"
-)
+# 1. Page Configuration & Styling
+st.set_page_config(page_title="Aesthetic Content Engine", page_icon="✨", layout="centered")
 
-# 2. Comprehensive Boho Aesthetics Style Engine Overhaul
-st.markdown(
-    """
+st.markdown("""
     <style>
-    /* 1. Global Page View Background Theme Override */
-    .stApp, [data-testid="stAppViewContainer"], [data-testid="stMainBlockContainer"] {
-        background-color: #faf7f2 !important; /* Premium warm linen/cream background */
-        color: #51463e !important; /* Organic charcoal-taupe body text */
+    /* Change background and font colors */
+    .main {background-color: #FAF9F6;}
+    h1 {color: #2C2C2C; font-family: 'Helvetica Neue', sans-serif;}
+    
+    /* Style the custom action button */
+    div.stButton > button:first-child {
+        background-color: #2C2C2C;
+        color: white;
+        border-radius: 8px;
+        padding: 10px 24px;
+        border: none;
     }
     
-    /* Completely hide native Streamlit system interface clutter */
-    header, footer, [data-testid="stHeader"], .stAppDeployButton, #MainMenu, [data-testid="stViewerBadge"], [data-testid="stDecoration"], [data-testid="stToolbar"] {
-        visibility: hidden !important; 
+        /* Completely hide menus, headers, and toolbars */
+    #MainMenu {visibility: hidden !important; display: none !important;}
+    header {visibility: hidden !important; display: none !important;}
+    [data-testid="stHeader"] {display: none !important;}
+    .stAppDeployButton {display: none !important;}
+    
+    /* Target and destroy the footer, viewer badge, and any floating profile bars at the bottom */
+    footer {visibility: hidden !important; display: none !important;}
+    .viewerBadge {display: none !important;}
+    [data-testid="stViewerBadge"] {display: none !important;}
+    [data-testid="stDecoration"] {display: none !important;}
+    div[class^="st-emotion-cache"] > footer {display: none !important;}
+    
+    /* Force-hide the parent toolbar block that hosts the profile name badge */
+    [data-testid="stToolbar"] {
         display: none !important;
+        visibility: hidden !important;
     }
     
-    /* Layout structural sizing adjustment */
-    .block-container {
-        max-width: 520px !important;
-        padding-top: 2.5rem !important;
-        padding-bottom: 3rem !important;
-    }
-
-    /* 2. Top Header Typography Customization */
-    h1 {
-        font-family: 'Georgia', serif !important;
-        font-weight: 400 !important;
-        color: #40352e !important;
-        font-size: 28px !important;
-        letter-spacing: 0.5px !important;
-        margin-bottom: 8px !important;
-        text-align: center;
+    /* NUCLEAR OPTION: Destroy any container hosting creator attribution names or badges at the root level */
+    div[class*="viewer"], div[class*="Viewer"], div[class*="attribution"] {
+        display: none !important;
+        visibility: hidden !important;
     }
     
-    .subtitle-text {
-        font-size: 14px !important;
-        color: #8c7b70 !important;
-        line-height: 1.6 !important;
-        margin-bottom: 30px !important;
-        text-align: center;
-    }
-
-    /* 3. Re-aligning Form Field Title Labels */
-    div[data-testid="stWidgetLabel"] p {
-        font-size: 11px !important;
-        font-weight: 600 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 1px !important;
-        color: #7a6c61 !important; /* Visible, elegant taupe labels */
-        margin-bottom: 6px !important;
-    }
-
-    /* 4. EXHAUSTIVE BASE ELEMENT STYLING (Forcing inputs out of dark mode) */
-    /* Target Selectboxes, Input Bars, and Textareas comprehensively */
-    div[data-baseweb="select"] > div, 
-    textarea, 
-    [data-testid="stTextArea"] textarea,
-    div[role="combobox"] {
-        background-color: #ffffff !important;
-        border: 1px solid #e6ded6 !important;
-        border-radius: 10px !important;
-        color: #51463e !important;
-    }
-
-    /* Target the text color inside closed select fields specifically */
-    div[data-baseweb="select"] div[aria-selected="true"],
-    div[data-baseweb="select"] span,
-    div[data-baseweb="select"] div {
-        color: #51463e !important;
-    }
-    
-    /* Input interactive focus state borders */
-    textarea:focus, div[data-baseweb="select"] > div:focus-within {
-        border-color: #bfa895 !important;
-        box-shadow: 0 0 0 3px rgba(191, 168, 149, 0.15) !important;
-    }
-
-    /* 5. FIXING THE OPEN POPUP LIST BOXES (Fixes hidden white-on-white text) */
-    div[data-baseweb="popover"], 
-    div[role="listbox"], 
-    ul[role="listbox"], 
-    div[data-inner-popover="true"] {
-        background-color: #ffffff !important;
-        border: 1px solid #e6ded6 !important;
-        border-radius: 10px !important;
-    }
-    
-    /* Fix specific list item attributes explicitly */
-    li[role="option"], 
-    div[data-baseweb="popover"] li, 
-    ul[role="listbox"] li {
-        background-color: #ffffff !important;
-        color: #51463e !important; /* Deep organic taupe color so text is visible */
-        font-size: 14px !important;
-        padding: 12px 16px !important;
-        cursor: pointer !important;
-    }
-    
-    /* Highlight states when hovering or selecting dropdown item choices */
-    li[role="option"]:hover, 
-    li[data-highlighted="true"], 
-    div[data-baseweb="popover"] li:hover {
-        background-color: #faf7f2 !important; /* Shifts item box to beautiful light cream */
-        color: #40352e !important;
-    }
-
-    /* 6. Earthy Premium Action Button styling */
-    div.stButton > button {
-        width: 100% !important;
-        background-color: #51463e !important; /* Elegant deep espresso brown shade */
-        color: #faf7f2 !important;
-        border: none !important;
-        border-radius: 10px !important;
-        padding: 14px !important;
-        font-size: 13px !important;
-        font-weight: 600 !important;
-        letter-spacing: 1px !important;
-        text-transform: uppercase !important;
-        transition: all 0.2s ease !important;
-        margin-top: 15px !important;
-        box-shadow: 0 4px 15px rgba(81, 70, 62, 0.15) !important;
-    }
-
-    div.stButton > button:hover {
-        background-color: #40352e !important;
-        box-shadow: 0 6px 20px rgba(81, 70, 62, 0.25) !important;
+    /* Hide the entire bottom-right floating utilities grid block completely */
+    div[class*="stStatusWidget"] {
+        display: none !important;
+        visibility: hidden !important;
     }
     </style>
-    """,
-    unsafe_allow_html=True
-)
+""", unsafe_allow_html=True)
 
-# 3. Dynamic Logo Path Mapping Setup (Configured for standard transparent png layout)
-github_logo_url = "https://githubusercontent.com"
+st.title("✨ Aesthetic Content Engine")
+st.write("Generate high-converting, luxury social media captions for your templates in seconds.")
 
-# 4. Content Presentation Layout Header Block
-st.markdown(
-    f"""
-    <div style="text-align: center;">
-        <img src="{github_logo_url}" style="max-width: 150px; height: auto; margin-bottom: 12px;" alt="Iselune Design">
-        <h1>Aesthetic Content Engine</h1>
-        <p class="subtitle-text">Generate high-converting, luxury social media captions for your templates in seconds.</p>
-    </div>
-    """, 
-    unsafe_allow_html=True
-)
-
-# 5. Core Operational Form Inputs Matrix
+# 2. Frontend Form Questions
 niche = st.selectbox(
     "What template are you using today?",
     ["Med Spa & Esthetician", "Hair Stylist & Nail Tech", "Wedding Invitations & Events", "Seasonal & Holidays"]
@@ -171,11 +71,12 @@ tone = st.selectbox(
     ["Luxurious & Elegant", "Friendly & Welcoming", "Educational & Expert", "Witty & Trendy"]
 )
 
-# 6. AI Generation Processing Pipeline Connection
+# 3. AI Generation Trigger
 if st.button("Generate Caption"):
     if not topic.strip():
         st.warning("Please type a topic or announcement first!")
     else:
+        # Access the securely hidden OpenAI API key from Streamlit settings
         if "OPENAI_API_KEY" in st.secrets:
             api_key = st.secrets["OPENAI_API_KEY"]
         else:
@@ -186,9 +87,10 @@ if st.button("Generate Caption"):
         
         with st.spinner("Crafting your copy..."):
             try:
+                # Hidden system prompt instructions mimicking your FormWise build
                 response = client.chat.completions.create(
                     model="gpt-4o-mini",
-                    max_tokens=450,  
+                    max_tokens=450,  # Strict cap to prevent buyers from draining credits
                     temperature=0.7,
                     messages=[
                         {
@@ -209,7 +111,7 @@ if st.button("Generate Caption"):
                     ]
                 )
                 
-                # Render engine text data output onto the live web layout
+                # Output the finished result onto the user's screen
                 st.markdown("---")
                 st.success("Your Content is Ready!")
                 st.write(response.choices[0].message.content)
