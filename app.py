@@ -1,73 +1,83 @@
 import streamlit as st
 
-# Set up the tab title and browser icon properties
+# 1. Page Configuration Setup
 st.set_page_config(
     page_title="Aesthetic Content Engine | Iselune Design",
     page_icon="✦",
     layout="centered"
 )
 
-# Complete Boho-Celestial HTML/CSS Interface Matrix wrapped cleanly for Streamlit execution
-boho_interface_code = """
+# 2. Inject CSS to hide Streamlit padding and change the master background color
+# This eliminates the dark box outline look completely.
+st.markdown(
+    """
+    <style>
+        /* Force the entire background screen to match your aesthetic theme */
+        .stApp {
+            background-color: #faf7f2 !important;
+        }
+        /* Remove default Streamlit header and footer spacing blocks */
+        header {visibility: hidden;}
+        footer {visibility: hidden;}
+        .block-container {
+            padding-top: 2rem !important;
+            padding-bottom: 0rem !important;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# 3. Dynamic Logo Path Definition
+# This routes your image call directly to the raw file asset on your GitHub main branch.
+github_logo_url = "https://githubusercontent.com"
+
+# 4. Integrated Aesthetic Interface Component Design
+boho_interface_code = f"""
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <style>
-        body, html {
+        body, html {{
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            background-color: #faf7f2; /* Soft warm linen background */
+            background-color: #faf7f2; /* Smooth warm linen background match */
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            color: #51463e; /* Earthy charcoal-taupe text */
+            color: #51463e; /* Gentle, earthy charcoal-taupe text */
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             overflow: hidden;
-        }
+        }}
 
-        /* Ambient background glow */
-        body::before {
-            content: '';
-            position: absolute;
-            top: -10%;
-            right: -10%;
-            width: 50%;
-            height: 50%;
-            background: radial-gradient(circle, rgba(235, 219, 203, 0.4) 0%, rgba(250, 247, 242, 0) 70%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .engine-card {
-            background-color: #ffffff; /* Clean white dashboard card */
+        .engine-card {{
+            background-color: #ffffff; /* Clean white canvas card dashboard layout */
             width: 100%;
             max-width: 500px;
-            margin: 20px auto;
+            margin: 10px auto;
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 12px 40px rgba(163, 145, 129, 0.12);
             border: 1px solid rgba(214, 201, 188, 0.5);
-            z-index: 2;
             box-sizing: border-box;
             text-align: center;
-        }
+        }}
 
-        .brand-header {
+        .brand-header {{
             margin-bottom: 30px;
-        }
+        }}
 
-        /* References your uploaded transparent logo hosted on GitHub */
-        .brand-logo {
+        .brand-logo {{
             display: block;
-            max-width: 150px;
+            max-width: 160px; /* Elegant scale fitting the logo geometry */
             height: auto;
             margin: 0 auto 16px;
-        }
+        }}
 
-        h1 {
+        h1 {{
             font-family: 'Georgia', serif; /* Luxurious typography matching your logo */
             font-weight: 400;
             font-size: 26px;
@@ -76,19 +86,19 @@ boho_interface_code = """
             letter-spacing: 0.5px;
         }
 
-        .subtitle {
+        .subtitle {{
             font-size: 13px;
             color: #8c7b70;
             margin: 0 0 25px 0;
             line-height: 1.5;
-        }
+        }}
 
-        .form-group {
+        .form-group {{
             text-align: left;
             margin-bottom: 20px;
-        }
+        }}
 
-        label {
+        label {{
             display: block;
             font-size: 11px;
             font-weight: 600;
@@ -96,9 +106,9 @@ boho_interface_code = """
             letter-spacing: 1px;
             color: #8c7b70;
             margin-bottom: 8px;
-        }
+        }}
 
-        select, textarea {
+        select, textarea {{
             width: 100%;
             box-sizing: border-box;
             background-color: #faf7f2;
@@ -110,9 +120,9 @@ boho_interface_code = """
             outline: none;
             transition: all 0.25s ease;
             font-family: inherit;
-        }
+        }}
 
-        select {
+        select {{
             cursor: pointer;
             appearance: none;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://w3.org' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238c7b70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
@@ -121,24 +131,24 @@ boho_interface_code = """
             padding-right: 40px;
         }
 
-        textarea {
+        textarea {{
             resize: none;
             height: 90px;
             line-height: 1.5;
         }
 
-        textarea::placeholder {
+        textarea::placeholder {{
             color: #bcaea1;
             opacity: 0.6;
-        }
+        }}
 
-        select:focus, textarea:focus {
+        select:focus, textarea:focus {{
             border-color: #bfa895;
             background-color: #ffffff;
             box-shadow: 0 0 0 3px rgba(191, 168, 149, 0.15);
-        }
+        }}
 
-        .submit-btn {
+        .submit-btn {{
             width: 100%;
             background-color: #51463e; /* Luxurious dark espresso shade */
             color: #faf7f2;
@@ -153,20 +163,20 @@ boho_interface_code = """
             transition: all 0.2s ease;
             margin-top: 5px;
             box-shadow: 0 4px 15px rgba(81, 70, 62, 0.2);
-        }
+        }}
 
-        .submit-btn:hover {
+        .submit-btn:hover {{
             background-color: #40352e;
             transform: translateY(-1px);
-        }
+        }}
     </style>
 </head>
 <body>
 
     <div class="engine-card">
         <div class="brand-header">
-            <!-- Pulls the logo file directly from your GitHub master directory -->
-            <img class="brand-logo" src="logo.svg" alt="Iselune Design Logo">
+            <!-- Uses the direct global raw path link to guarantee delivery -->
+            <img class="brand-logo" src="{github_logo_url}" alt="Iselune Design Logo">
             <h1>Aesthetic Content Engine</h1>
             <div class="subtitle">Generate high-converting, luxury social media captions for your templates in seconds.</div>
         </div>
@@ -203,5 +213,5 @@ boho_interface_code = """
 </html>
 """
 
-# Render the custom designed app directly into the Streamlit page view
-st.components.v1.html(boho_interface_code, height=680, scrolling=False)
+# Render card system matching layout constraints perfectly
+st.components.v1.html(boho_interface_code, height=660, scrolling=False)
