@@ -6,13 +6,13 @@ st.set_page_config(page_title="Aesthetic Content Engine", page_icon="🌿", layo
 
 st.markdown("""
     <style>
-    /* FORCE GLOBAL LIGHT/BOHO BACKGROUND OVERRIDING DARK MODE */
-    html, body, [data-testid="stAppViewContainer"], .main {
+    /* 1. FORCE GLOBAL LIGHT/BOHO BACKGROUND OVERRIDING BASE THEMES */
+    html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"], .main {
         background-color: #FAF6F0 !important;
         color: #4A3E3D !important;
     }
     
-    /* Elegant Serif Header styling */
+    /* 2. RE-FIXING THE TYPOGRAPHY OVERLAY SYSTEM */
     h1 {
         color: #4A3E3D !important; 
         font-family: 'Georgia', serif;
@@ -27,7 +27,7 @@ st.markdown("""
         margin-bottom: 25px;
     }
     
-    /* FORCE LABEL TEXT VISIBILITY (Preventing dark-on-dark text) */
+    /* 3. FORCING LIGHT-THEME LABELS FOR ALL FIELDS */
     div[data-testid="stSelectbox"] label p, div[data-testid="stTextArea"] label p {
         color: #4A3E3D !important;
         font-family: 'Georgia', serif;
@@ -35,22 +35,34 @@ st.markdown("""
         font-size: 16px !important;
     }
     
-    /* FORCE CREAM/WHITE BACKGROUND FOR INPUTFIELES */
+    /* 4. TOTAL FIX FOR INNER SELECTION & DROPDOWN CONTAINERS */
+    /* Forces dropdown selection boxes, input regions, and text fields out of dark mode */
     div[data-testid="stSelectbox"] div[data-baseweb="select"], 
     div[data-testid="stTextArea"] textarea,
-    div[role="listbox"] {
+    div[role="listbox"],
+    div[data-baseweb="popover"] ul,
+    div[data-baseweb="popover"] li {
         background-color: #FFFFFF !important;
         border: 1px solid #E6DFD3 !important;
         border-radius: 12px !important;
         color: #4A3E3D !important;
     }
-    
-    /* Ensure the text typed inside the inputs is dark brown instead of white */
-    div[data-testid="stSelectbox"] *, div[data-testid="stTextArea"] textarea {
+
+    /* Target inner text within input containers to ensure it stays dark brown */
+    div[data-testid="stSelectbox"] *, 
+    div[data-testid="stTextArea"] textarea,
+    div[data-baseweb="popover"] * {
         color: #4A3E3D !important;
+        background-color: transparent !important;
     }
     
-    /* Terracotta Boho Action Button */
+    /* Specific adjustment for active hover item choices in dropdowns */
+    div[role="option"]:hover, [aria-selected="true"] {
+        background-color: #FAF6F0 !important;
+        color: #BC6C25 !important;
+    }
+    
+    /* 5. TERRACOTTA BOHO BUTTON SYSTEM */
     div.stButton > button:first-child {
         background-color: #D4A373 !important;
         color: white !important;
@@ -70,32 +82,28 @@ st.markdown("""
         box-shadow: 0px 6px 15px rgba(188, 108, 37, 0.3) !important;
     }
     
-    /* Completely hide menus, headers, and toolbars */
+    /* 6. SYSTEM PLATFORM UTILITY HIDER BLOCKS */
     #MainMenu {visibility: hidden !important; display: none !important;}
     header {visibility: hidden !important; display: none !important;}
     [data-testid="stHeader"] {display: none !important;}
     .stAppDeployButton {display: none !important;}
     
-    /* Target and destroy the footer, viewer badge, and any floating profile bars at the bottom */
     footer {visibility: hidden !important; display: none !important;}
     .viewerBadge {display: none !important;}
     [data-testid="stViewerBadge"] {display: none !important;}
     [data-testid="stDecoration"] {display: none !important;}
     div[class^="st-emotion-cache"] > footer {display: none !important;}
     
-    /* Force-hide the parent toolbar block that hosts the profile name badge */
     [data-testid="stToolbar"] {
         display: none !important;
         visibility: hidden !important;
     }
     
-    /* Destroy any container hosting creator attribution names or badges at the root level */
     div[class*="viewer"], div[class*="Viewer"], div[class*="attribution"] {
         display: none !important;
         visibility: hidden !important;
     }
     
-    /* Hide the entire bottom-right floating utilities grid block completely */
     div[class*="stStatusWidget"] {
         display: none !important;
         visibility: hidden !important;
@@ -103,14 +111,14 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 2. Header and Logo Layout (Fixed HTML Embedding method)
+# 2. FIXED LOGO HANDLING
+# Pulling raw image bytes directly from GitHub's static user content delivery domain
 logo_url = "https://githubusercontent.com"
 
-# Renders the logo centered reliably using clean HTML markup
 st.markdown(
     f"""
-    <div style="text-align: center;">
-        <img src="{logo_url}" width="120" style="margin-bottom: 10px;">
+    <div style="text-align: center; margin-bottom: 15px;">
+        <img src="{logo_url}" width="140" style="border-radius: 50%;">
     </div>
     """,
     unsafe_allow_html=True
@@ -140,7 +148,6 @@ if st.button("✨ Craft Content"):
     if not topic.strip():
         st.warning("Please type a topic or announcement first!")
     else:
-        # Access the securely hidden OpenAI API key from Streamlit settings
         if "OPENAI_API_KEY" in st.secrets:
             api_key = st.secrets["OPENAI_API_KEY"]
         else:
@@ -151,10 +158,9 @@ if st.button("✨ Craft Content"):
         
         with st.spinner("Weaving your copy together..."):
             try:
-                # Hidden system prompt instructions mimicking your FormWise build
                 response = client.chat.completions.create(
                     model="gpt-4o-mini",
-                    max_tokens=450,  # Strict cap to prevent buyers from draining credits
+                    max_tokens=450,
                     temperature=0.7,
                     messages=[
                         {
@@ -175,7 +181,6 @@ if st.button("✨ Craft Content"):
                     ]
                 )
                 
-                # Output the finished result onto the user's screen
                 st.markdown("---")
                 st.success("Your Content is Ready!")
                 st.write(response.choices[0].message.content)
